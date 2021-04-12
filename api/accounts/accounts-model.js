@@ -2,13 +2,12 @@
 const db = require("../../data/db-config.js")
 
 const getAll = () => {
-  // DO YOUR MAGIC
-  //select * from accounts <table name>
+    //select * from accounts <table name> is basically what the next line says. 
   return db("accounts")
 }
 
 const getById = id => {
-  // DO YOUR MAGIC
+  return db("accounts").where("id",id).first()
 }
 
 const create = account => {
