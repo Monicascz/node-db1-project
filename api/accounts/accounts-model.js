@@ -1,5 +1,10 @@
+//pull in all the knex and store inside db
+const db = require("../../data/db-config.js")
+
 const getAll = () => {
   // DO YOUR MAGIC
+  //select * from accounts <table name>
+  return db("accounts")
 }
 
 const getById = id => {
