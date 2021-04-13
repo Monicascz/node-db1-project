@@ -11,11 +11,19 @@ const getById = id => {
 }
 
 const create = account => {
-  // DO YOUR MAGIC
+  return db("accounts").insert(account)
+  .then(([id])=>{
+    return db("accounts").where("id",id).first()
+  })
 }
 
 const updateById = (id, account) => {
-  // DO YOUR MAGIC
+  const accountId = id
+
+  return db("accounts").where("id",id).update(account)
+  .then(()=>{
+    return db("accounts").where("id",accountId).first()
+  })
 }
 
 const deleteById = id => {
