@@ -32,8 +32,8 @@ router.get('/:id', mw.checkAccountId, async (req, res, next) => {
 // ✕ responds with a 400 and proper error if budget is not a number (12 ms)
 // ✕ responds with a 400 and proper error if budget is negative or too big (12 ms)
 // ✕ responds with a 400 and proper error if name already exists in the db (11 ms)
-router.post('/', mw.checkAccountPayload, mw.checkAccountNameUnique, async (req, res, next) => {
-  const account = req.body
+router.post('/', mw.checkAccountPayload,  async (req, res, next) => {
+  const {account} = req.body
   try{
     const data = await Accounts.create(account)
     res.status(201).json(data)
@@ -42,7 +42,7 @@ router.post('/', mw.checkAccountPayload, mw.checkAccountNameUnique, async (req, 
   }
 })
 
-router.put('/:id', mw.checkAccountPayload, mw.checkAccountNameUnique, mw.checkAccountId, async (req, res, next) => {
+router.put('/:id', mw.checkAccountPayload,  mw.checkAccountId, async (req, res, next) => {
   try{
     const {id} = req.params
     const account = req.body
