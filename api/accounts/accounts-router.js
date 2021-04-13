@@ -42,7 +42,7 @@ router.post('/', mw.checkAccountPayload, mw.checkAccountNameUnique, async (req, 
   }
 })
 
-router.put('/:id', mw.checkAccountId, mw.checkAccountNameUnique, mw.checkAccountPayload, async (req, res, next) => {
+router.put('/:id', mw.checkAccountPayload, mw.checkAccountNameUnique, mw.checkAccountId, async (req, res, next) => {
   try{
     const {id} = req.params
     const account = req.body
