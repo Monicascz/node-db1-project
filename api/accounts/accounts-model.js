@@ -1,6 +1,9 @@
 //pull in all the knex and store inside db
 const db = require("../../data/db-config.js")
 
+//try to avoid using raw sql in our code. BUT it is better ot use the query builder 
+//so we need to use the query wrapper from db-config. with the code above.
+
 const getAll = () => {
     //select * from accounts <table name> is basically what the next line says. 
   return db("accounts")

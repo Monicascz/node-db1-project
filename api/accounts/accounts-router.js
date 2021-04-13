@@ -5,6 +5,8 @@ const mw = require('./accounts-middleware.js');
 const Accounts = require("./accounts-model.js");
 
 router.get('/', async (req, res, next) => {
+  //Solution Code says you could just use
+  // res.json(req.account)
   try {
     const data = await Accounts.getAll()
     res.json(data)
@@ -30,7 +32,7 @@ router.get('/:id', mw.checkAccountId, async (req, res, next) => {
 // ✕ responds with a 400 and proper error if budget is not a number (12 ms)
 // ✕ responds with a 400 and proper error if budget is negative or too big (12 ms)
 // ✕ responds with a 400 and proper error if name already exists in the db (11 ms)
-router.post('/', async (req, res, next) => {
+router.post('/', mw.checkAccountPayload, mw.checkAccountNameUnique, async (req, res, next) => {
   const account = req.body
   try{
     const data = await Accounts.create(account)
@@ -40,7 +42,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', mw.checkAccountId, mw.checkAccountPayload, async (req, res, next) => {
+router.put('/:id', mw.checkAccountId, mw.checkAccountNameUnique, mw.checkAccountPayload, async (req, res, next) => {
   try{
     const {id} = req.params
     const account = req.body
@@ -62,8 +64,12 @@ router.delete('/:id', mw.checkAccountId, async (req, res, next) => {
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line
-  // DO YOUR MAGIC
-  res.status(500).json({message: err.message, stack:err.stack})
+  //FROM GABE SOLUTION CODE:
+  res.status(err.status || 500).json({
+    message: err.message,
+  })
+  ///FROM LECTURE:
+  //res.status(500).json({message: err.message, stack:err.stack})
 })
 
 module.exports = router;
